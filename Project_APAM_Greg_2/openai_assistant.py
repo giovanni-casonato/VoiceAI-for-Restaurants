@@ -14,11 +14,14 @@ class FoodOrderAssistant:
         self.thread = None
 
     def initialize_assistant(self):
+        with open('instructions.txt', "r") as f:
+            instructions = f.read()
+        
         self.assistant = self.client.beta.assistants.create(
             name="Food Orders",
-            instructions=f"You are Sophia, an employee at {self.company_name} in {self.company_location} who picks up the phone to take orders from customers. Be polite and don't waste customers' time",
+            instructions=f"You are Sophia, an employee at {self.company_name} in {self.company_location} who picks up the phone to take orders from customers. {instructions}",
             tools=[{"type": "retrieval"}],
-            model="gpt-3.5-turbo-0125",
+            model="gpt-4-turbo",
         )
 
         self.thread = self.client.beta.threads.create()
@@ -35,8 +38,9 @@ class FoodOrderAssistant:
 
         @override
         def on_message_done(self, message: Message) -> None:
-            assistant_response = message.content[0].text.value
+            # check if message contains food order
 
+            assistant_response = message.content[0].text.value
             deepgram.get_b64_audio_from_text(assistant_response)
             return super().on_message_done(message)
 
@@ -64,4 +68,18 @@ class FoodOrderAssistant:
             event_handler=event_handler,
         ) as stream:
             stream.until_done()
+    
+    # TODO: Fix thread interactions, seems like new thread is being started after each transcript
+    def end_conversation(self):
+        event_handler = self.EventHandler()
+        with self.client.beta.threads.runs.create_and_stream(
+            thread_id=self.thread.id,
+            assistant_id=self.assistant.id,
+            instructions= "Now that you have received a food order, I need you to output the order into a JSON format",
+            event_handler = event_handler,
+        ) as stream:
+            stream.until_done()
+        
+        print('Trying to place order')
+
 

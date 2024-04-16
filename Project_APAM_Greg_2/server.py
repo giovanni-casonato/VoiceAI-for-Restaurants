@@ -46,6 +46,7 @@ def receive_call():
         response.append(connect)
 
         return Response(str(response), mimetype='text/xml')
+    return "Hello World"
 
 @sock.route(WEBSOCKET_ROUTE)
 def transcription_websocket(ws):
@@ -55,6 +56,7 @@ def transcription_websocket(ws):
             return
 
         files = os.listdir(FOLDER_PATH)
+
         if not files:
             data = json.loads(ws.receive())
             match data['event']:

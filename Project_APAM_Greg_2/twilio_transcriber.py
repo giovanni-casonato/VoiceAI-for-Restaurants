@@ -36,6 +36,7 @@ def on_data(transcript: aai.RealtimeTranscript):
             role="user",
             content=transcript.text,
         )
+        # PROBLEM : conversation starts after each transcript
         assistant.start_conversation()
     else:
         print(f"{transcript.text}", end="\r")
@@ -48,6 +49,7 @@ def on_error(error: aai.RealtimeError):
 
 def on_close():
     "Called when the connection has been closed."
+    assistant.end_conversation()
     assistant.client.beta.assistants.delete(assistant.assistant.id)
     print("Closing Assistant Session")
     
