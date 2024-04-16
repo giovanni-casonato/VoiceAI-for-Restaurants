@@ -17,7 +17,7 @@ python -m venv venv
 ```shell
 pip install -r requirements.txt
 ```
-
+Note: Be sure to add necessary folder for audio output of assembly and deepgram
 # Run the application
 
 Execute `python server.py` or `python3 server.py` in the project directory to start the application. Then, call your Twilio phone number and begin speaking. You will see your speech transcribed in the console.
