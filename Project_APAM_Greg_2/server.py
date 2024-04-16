@@ -75,6 +75,9 @@ def transcription_websocket(ws):
                     print('\ntwilio stopped')
                     transcriber.close()
                     print('transcriber closed')
+                    # cleaning up output file if it still exists after call
+                    if os.path.exists(os.path.join(FOLDER_PATH, 'output.txt')):
+                        os.remove(os.path.join(FOLDER_PATH, 'output.txt'))
 
         for file_name in files:
             print("System: Sending file\n")

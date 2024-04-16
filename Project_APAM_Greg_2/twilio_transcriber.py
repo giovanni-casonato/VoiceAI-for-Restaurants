@@ -18,6 +18,8 @@ TWILIO_SAMPLE_RATE = 8000 # Hz
 
 def on_open(session_opened: aai.RealtimeSessionOpened):
     "Called when the connection has been established."
+    #each call gets its own assistant
+    assistant.initialize_assistant()
     print("Session ID:", session_opened.session_id) 
 
 
@@ -30,7 +32,6 @@ def on_data(transcript: aai.RealtimeTranscript):
     if isinstance(transcript, aai.RealtimeFinalTranscript):
         print(f"Caller: {transcript.text}", end="\r\n")
         
-        assistant.initialize_assistant()
         assistant.client.beta.threads.messages.create(
             thread_id=assistant.thread.id,
             role="user",

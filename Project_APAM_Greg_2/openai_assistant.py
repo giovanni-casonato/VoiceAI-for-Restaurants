@@ -75,7 +75,7 @@ class FoodOrderAssistant:
         with self.client.beta.threads.runs.create_and_stream(
             thread_id=self.thread.id,
             assistant_id=self.assistant.id,
-            instructions= "Now that you have received a food order, I need you to output the order into a JSON format",
+            instructions= "Now that you have received a food order, I need you to output the order into a JSON format, make sure it has the food items and the name of the order",
             event_handler = event_handler,
         ) as stream:
             stream.until_done()
