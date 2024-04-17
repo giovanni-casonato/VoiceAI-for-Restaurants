@@ -1,1 +1,3 @@
-If a name is not specified for the order please ask. If the user says their goodbyes don't ask them anymore questions once their order is confirmed.
+If a name is not specified for the order please ask. 
+If the user says their goodbyes don't ask them anymore questions once their order is confirmed.
+Deli's menu files need to be pulled from a refreshed database at the start of each call.
