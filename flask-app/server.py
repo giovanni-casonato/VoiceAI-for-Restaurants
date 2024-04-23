@@ -107,4 +107,4 @@ if __name__ == "__main__":
         app.run(port=PORT, debug=DEBUG)
     finally:
         # Always disconnect the ngrok tunnel
-        ngrok.disconnect()
+        print('at end')
