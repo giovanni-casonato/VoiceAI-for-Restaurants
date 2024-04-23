@@ -2,3 +2,5 @@
 venv
 __pycache__
 .DS_Store
+secrets/db_password.txt
+secrets/db_root_password.txt 
