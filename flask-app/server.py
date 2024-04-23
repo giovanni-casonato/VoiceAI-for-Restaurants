@@ -11,14 +11,14 @@ load_dotenv()
 
 from twilio.twiml.voice_response import Connect, VoiceResponse
 
-from twilio_transcriber import TwilioTranscriber
+from src.twilio_transcriber import TwilioTranscriber
 
 # Flask settings
-PORT = 5000
+PORT = 4000
 DEBUG = False
 INCOMING_CALL_ROUTE = '/'
 WEBSOCKET_ROUTE = '/realtime'
-FOLDER_PATH = 'b64_client_data'
+FOLDER_PATH = 'src/b64_client_data'
 
 # Twilio authentication
 twilio_account_sid = os.environ['TWILIO_ACCOUNT_SID']
@@ -56,7 +56,6 @@ def transcription_websocket(ws):
             return
 
         files = os.listdir(FOLDER_PATH)
-
         if not files:
             data = json.loads(ws.receive())
             match data['event']:

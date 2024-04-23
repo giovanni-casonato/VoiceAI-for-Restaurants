@@ -1,7 +1,7 @@
 from typing_extensions import override
 from openai import OpenAI, AssistantEventHandler
 from openai.types.beta.threads import Message
-from tts_deepgram import DeepgramAPI
+from src.tts_deepgram import DeepgramAPI
 
 deepgram = DeepgramAPI()
 
@@ -14,13 +14,12 @@ class FoodOrderAssistant:
         self.thread = None
 
     def initialize_assistant(self):
-        with open('instructions.txt', "r") as f:
+        with open('src/instructions.txt', "r") as f:
             instructions = f.read()
         
         self.assistant = self.client.beta.assistants.create(
             name="Food Orders",
             instructions=f"You are Sophia, an employee at {self.company_name} in {self.company_location} who picks up the phone to take orders from customers. {instructions}",
-            tools=[{"type": "retrieval"}],
             model="gpt-4-turbo",
         )
 

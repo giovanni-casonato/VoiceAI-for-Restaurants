@@ -22,7 +22,7 @@ class DeepgramAPI:
         if response.status_code == 200:
             audio_data = response.content
             payload_b64 = base64.b64encode(audio_data).decode('utf-8')
-            file_path = os.path.join("b64_client_data", f"output.txt")
+            file_path = os.path.join("src/b64_client_data", f"output.txt")
             with open(file_path, "w") as f:
                 f.write(payload_b64)
             print(f"File saved successfully at {file_path}\n")

@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.12.3"
 
 # We are setting up 2 services: web and 
 services:
@@ -9,20 +9,19 @@ services:
     
     # Set up the web server according to the Dockerfile inside the api/ folder
     build: flask-app/
-    
-    # connect the src folder in on the host machine to the code folder in the container. 
-    # note that the code folder in contaier is the working directory (see DockerFile).
-    volumes: ['./flask-app:/code', './secrets:/secrets'] 
-
+  
     # have the container restart if it fails for some reason. 
     restart: unless-stopped
 
-    # map host port 8001 to container port 4000 (see the EXPOSE command in api/Dockerfile)
+    # map host port 9000 to container port 4000 (see the EXPOSE command in api/Dockerfile)
     ports:
       - "9000:4000"
 
     links:
       - db
+      
+    env_file:
+      - .env
 
 
 
