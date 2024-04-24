@@ -16,6 +16,7 @@ from src.twilio_transcriber import TwilioTranscriber
 # Flask settings
 PORT = 4000
 DEBUG = False
+DIGITAL_OCEAN_URL = '157.230.226.93'
 INCOMING_CALL_ROUTE = '/'
 WEBSOCKET_ROUTE = '/realtime'
 FOLDER_PATH = 'src/b64_client_data'
@@ -101,7 +102,7 @@ if __name__ == "__main__":
         # Set ngrok URL to ne the webhook for the appropriate Twilio number
         twilio_numbers = client.incoming_phone_numbers.list()
         twilio_number_sid = [num.sid for num in twilio_numbers if num.phone_number == TWILIO_NUMBER][0]
-        client.incoming_phone_numbers(twilio_number_sid).update(twilio_account_sid, voice_url=f"{'URL'}{INCOMING_CALL_ROUTE}")
+        client.incoming_phone_numbers(twilio_number_sid).update(twilio_account_sid, voice_url=f"{DIGITAL_OCEAN_URL}{INCOMING_CALL_ROUTE}")
 
         # run the app
         app.run(port=PORT, debug=DEBUG)
